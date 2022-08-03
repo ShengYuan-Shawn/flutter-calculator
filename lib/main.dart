@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:state_management/counter_cubit.dart';
+import 'counter_result.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -10,6 +11,10 @@ void main() {
       create: (context) => CounterCubit(),
       child: const HomePage(),
     ),
+    routes: {
+      '/home': (context) => HomePage(),
+      '/result': (context) => Multiplication(),
+    },
   ));
 }
 
@@ -37,6 +42,8 @@ class _HomePageState extends State<HomePage> {
   int count = 0;
 
   late CounterCubit cubit;
+
+  final _valueController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -67,10 +74,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+                  child: TextField(
+                    controller: _valueController,
+                    decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Enter a number'),
+                  ),
+                ),
                 Text(
                   "$state",
-                  style:
-                      const TextStyle(fontSize: 100, fontFamily: 'Helvetica'),
+                  style: const TextStyle(fontSize: 80, fontFamily: 'Helvetica'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -79,14 +95,14 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         cubit.decrement();
                       },
-                      style: ElevatedButton.styleFrom(primary: Colors.red),
-                      child: const Text("Decrement"),
+                      style: ElevatedButton.styleFrom(primary: Colors.blue),
+                      child: const Text("-"),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         cubit.reset();
                       },
-                      style: ElevatedButton.styleFrom(primary: Colors.amber),
+                      style: ElevatedButton.styleFrom(primary: Colors.blue),
                       child: const Text("Reset"),
                     ),
                     ElevatedButton(
@@ -94,7 +110,36 @@ class _HomePageState extends State<HomePage> {
                         cubit.increment();
                       },
                       style: ElevatedButton.styleFrom(primary: Colors.blue),
-                      child: const Text("Increment"),
+                      child: const Text("+"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // cubit.multiplication();
+                          int input = int.parse(_valueController.text);
+                          navigateToResultPage(context, input, state);
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.red),
+                        child: const Text("x"),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // cubit.division();
+                          int input = int.parse(_valueController.text);
+                          navigateToResultPage(context, input, state);
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.red),
+                        child: const Text("÷"),
+                      ),
                     ),
                   ],
                 ),
@@ -105,4 +150,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+void navigateToResultPage(BuildContext context, int input, int state) {
+  Navigator.pushNamed(context, '/result', arguments: {
+    input: input,
+    state: state,
+  });
 }
