@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(0);
+  int number = 2;
 
   void increment() {
     emit(state + 1);
@@ -16,11 +16,11 @@ class CounterCubit extends Cubit<int> {
     emit(0);
   }
 
-  void multiplication() {
-    // emit(state * 1);
-  }
+  // void multiplication() {
+  //   emit(state * number);
+  // }
 
-  void division() {
-    // emit(state / 1);
-  }
+  // void division() {
+  //   emit(state % number);
+  // }
 }

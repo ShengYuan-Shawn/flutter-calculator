@@ -15,27 +15,52 @@ class Multiplication extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('$input'),
+            Text(
+              '$input',
+              style: const TextStyle(fontSize: 40),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  child: Text('x'),
+                Container(
+                  margin: const EdgeInsets.all(40),
+                  child: const CircleAvatar(
+                    radius: 30,
+                    child: Text('x'),
+                  ),
                 ),
-                Text('$state'),
               ],
             ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                '$state',
+                style: const TextStyle(fontSize: 40),
+              ),
+            ),
             const Divider(
-              thickness: 4,
+              thickness: 3,
               indent: 20,
               endIndent: 20,
               color: Colors.black,
               height: 14,
             ),
-            Text('${input * state}'),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                '${input * state}',
+                style: const TextStyle(fontSize: 40),
+              ),
+            ),
+            const Divider(
+              thickness: 3,
+              indent: 20,
+              endIndent: 20,
+              color: Colors.black,
+              height: 14,
+            ),
           ],
         ),
       ),
@@ -58,27 +83,52 @@ class Division extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('$input'),
+            Text(
+              '$input',
+              style: const TextStyle(fontSize: 40),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  child: Text('÷'),
+                Container(
+                  margin: const EdgeInsets.all(40),
+                  child: const CircleAvatar(
+                    radius: 30,
+                    child: Text('÷'),
+                  ),
                 ),
-                Text('$state'),
               ],
             ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                '$state',
+                style: const TextStyle(fontSize: 40),
+              ),
+            ),
             const Divider(
-              thickness: 4,
+              thickness: 3,
               indent: 20,
               endIndent: 20,
               color: Colors.black,
               height: 14,
             ),
-            Text('${input * state}'),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                '${input / state}',
+                style: const TextStyle(fontSize: 40),
+              ),
+            ),
+            const Divider(
+              thickness: 3,
+              indent: 20,
+              endIndent: 20,
+              color: Colors.black,
+              height: 14,
+            ),
           ],
         ),
       ),

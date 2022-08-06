@@ -11,10 +11,6 @@ void main() {
       create: (context) => CounterCubit(),
       child: const HomePage(),
     ),
-    routes: {
-      '/home': (context) => HomePage(),
-      '/result': (context) => Multiplication(),
-    },
   ));
 }
 
@@ -24,10 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Counter",
-        theme: ThemeData.dark(),
-        home: BlocProvider(
-            create: (context) => CounterCubit(), child: const HomePage()));
+      title: "Counter",
+      theme: ThemeData.dark(),
+      home: BlocProvider(
+        create: (context) => CounterCubit(),
+        child: const HomePage(),
+      ),
+    );
   }
 }
 
@@ -40,9 +39,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int count = 0;
-
   late CounterCubit cubit;
-
   final _valueController = TextEditingController();
 
   @override
@@ -57,14 +54,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Home Page"),
+        title: const Text("Counter Calculator"),
       ),
       body: BlocConsumer<CounterCubit, int>(
         listener: (context, state) {
           // state is from the cubit
           const snackbar = SnackBar(content: Text("State is reached"));
 
-          if (state == 5) {
+          if (state == 100) {
             ScaffoldMessenger.of(context).showSnackBar(snackbar);
           }
         },
@@ -76,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   child: TextField(
                     controller: _valueController,
                     decoration: const InputDecoration(
@@ -86,31 +83,40 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   "$state",
-                  style: const TextStyle(fontSize: 80, fontFamily: 'Helvetica'),
+                  style: const TextStyle(fontSize: 70, fontFamily: 'Helvetica'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.decrement();
-                      },
-                      style: ElevatedButton.styleFrom(primary: Colors.blue),
-                      child: const Text("-"),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          cubit.decrement();
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        child: const Text("-"),
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.reset();
-                      },
-                      style: ElevatedButton.styleFrom(primary: Colors.blue),
-                      child: const Text("Reset"),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          cubit.reset();
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        child: const Text("Reset"),
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.increment();
-                      },
-                      style: ElevatedButton.styleFrom(primary: Colors.blue),
-                      child: const Text("+"),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          cubit.increment();
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        child: const Text("+"),
+                      ),
                     ),
                   ],
                 ),
@@ -122,8 +128,15 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           // cubit.multiplication();
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return resultPage('_valueController');
+                          //     },
+                          //   ),
+                          // );
                           int input = int.parse(_valueController.text);
-                          navigateToResultPage(context, input, state);
+                          navigateToMultiplicationPage(context, input, state);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.red),
                         child: const Text("x"),
@@ -134,8 +147,15 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           // cubit.division();
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return resultPage('_valueController');
+                          //     },
+                          //   ),
+                          // );
                           int input = int.parse(_valueController.text);
-                          navigateToResultPage(context, input, state);
+                          navigateToDivisionPage(context, input, state);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.red),
                         child: const Text("÷"),
@@ -152,9 +172,31 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-void navigateToResultPage(BuildContext context, int input, int state) {
-  Navigator.pushNamed(context, '/result', arguments: {
-    input: input,
-    state: state,
-  });
+void navigateToMultiplicationPage(BuildContext context, int input, int state) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Multiplication(input: input, state: state);
+      },
+    ),
+  );
 }
+
+void navigateToDivisionPage(BuildContext context, int input, int state) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Division(input: input, state: state);
+      },
+    ),
+  );
+}
+
+// void navigateToResultPage(BuildContext context, int input, int state) {
+//   Navigator.pushNamed(context, '/result', arguments: {
+//     input: input,
+//     state: state,
+//   });
+// }
