@@ -127,6 +127,8 @@ class _HomePageState extends State<HomePage> {
                       margin: const EdgeInsets.only(top: 20),
                       child: ElevatedButton(
                         onPressed: () {
+                          int input = int.parse(_valueController.text);
+                          navigateToMultiplicationPage(context, input, state);
                           // cubit.multiplication();
                           // Navigator.of(context).push(
                           //   MaterialPageRoute(
@@ -135,8 +137,8 @@ class _HomePageState extends State<HomePage> {
                           //     },
                           //   ),
                           // );
-                          int input = int.parse(_valueController.text);
-                          navigateToMultiplicationPage(context, input, state);
+                          // int input = int.parse(_valueController.text);
+                          // navigateToMultiplicationPage(context, input, state);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.red),
                         child: const Text("x"),
@@ -146,6 +148,8 @@ class _HomePageState extends State<HomePage> {
                       margin: const EdgeInsets.only(top: 20),
                       child: ElevatedButton(
                         onPressed: () {
+                          int input = int.parse(_valueController.text);
+                          navigateToDivisionPage(context, input, state);
                           // cubit.division();
                           // Navigator.of(context).push(
                           //   MaterialPageRoute(
@@ -154,8 +158,8 @@ class _HomePageState extends State<HomePage> {
                           //     },
                           //   ),
                           // );
-                          int input = int.parse(_valueController.text);
-                          navigateToDivisionPage(context, input, state);
+                          // int input = int.parse(_valueController.text);
+                          // navigateToDivisionPage(context, input, state);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.red),
                         child: const Text("÷"),
@@ -177,7 +181,10 @@ void navigateToMultiplicationPage(BuildContext context, int input, int state) {
     context,
     MaterialPageRoute(
       builder: (BuildContext context) {
-        return Multiplication(input: input, state: state);
+        return Multiplication(
+          input: input,
+          state: state,
+        );
       },
     ),
   );
@@ -188,7 +195,10 @@ void navigateToDivisionPage(BuildContext context, int input, int state) {
     context,
     MaterialPageRoute(
       builder: (BuildContext context) {
-        return Division(input: input, state: state);
+        return Division(
+          input: input,
+          state: state,
+        );
       },
     ),
   );
